@@ -1,9 +1,33 @@
 # TWSPI
 [![Build Status](https://travis-ci.org/rm-hull/twspi.svg?branch=master)](http://travis-ci.org/rm-hull/twspi) [![Coverage Status](https://coveralls.io/repos/rm-hull/twspi/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/twspi?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/twspi/status.svg)](https://jarkeeper.com/rm-hull/twspi) [![Downloads](https://jarkeeper.com/rm-hull/twspi/downloads.svg)](https://jarkeeper.com/rm-hull/twspi) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/twspi.svg)](https://clojars.org/rm-hull/twspi)
 
-A small prolog interpreter, implemented in Clojure.
+A small prolog interpreter, based on a paper by **M. Nilsson**, _Uppsala University_, 
+where the aim is to faithfully reproduce (at least initially) the same demonstrable 
+functionality in Clojure.
 
-> TODO: introduction
+> ### The world's shortest Prolog interpreter?
+> **M. Nilsson**, _Uppsala University_
+>
+> The aim of this article is to describe a small structure-sharing Prolog interpreter
+> which is implemented in LISP. It is easy to type in, fairly readable, and efficient
+> enough to execute programs which are small and simple, yet not totally trivial.
+>
+> #### IMPLEMENTATION
+> Admittedly, the title of this paper is a bit provocative. In fact, the interpreter
+> can be made even smaller by replacing the selector and constuctor functions
+> (which are there only for readability) with their respective CARs, CDRs, and
+> CONSes, etc.
+>
+> To improve on the time/memory efficiency, the best suggestion is to optimise
+> the variable binding scheme. In the version presented, linear list search is used
+> for finding bindings of variables. The interpreter can be sped up by a factor of
+> about 100 if instead some indexed data structure like an array is used (Nilsson, 
+> 1993). Unfortunately, in LISP such structures are often very implementation-dependent,
+> so they have been avoided here.
+>
+> The interpreter is written in MACLISP dialect (Moon, 1974). Only the most basic
+> functions are used, with the exceptions of LET and LOOP. LET is a convenient
+> way of writing LAMBDAs
 
 ### Pre-requisites
 
