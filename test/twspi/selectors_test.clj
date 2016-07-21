@@ -25,6 +25,12 @@
     [clojure.test :refer :all]
     [twspi.selectors :refer :all]))
 
+(deftest check-lvl
+  (is (= 0 (lvl (molec 0 '?x)))))
+
+(deftest check-xpr
+  (is (= '?x (xpr (molec 0 '?x)))))
+
 (def env
   (->>
     []
