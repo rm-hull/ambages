@@ -26,9 +26,11 @@
     [twspi.selectors :refer :all]))
 
 (deftest check-lvl
+  (is (nil? (lvl 3)))
   (is (= 0 (lvl (molec 0 '?x)))))
 
 (deftest check-xpr
+  (is (nil? (xpr 3)))
   (is (= '?x (xpr (molec 0 '?x)))))
 
 (def env

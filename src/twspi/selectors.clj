@@ -27,9 +27,24 @@
   (:require
     [twspi.primitives :refer :all]))
 
-(def lvl car)
-(def xpr cadr)
-(defn molec [x y] (list x y))
+(defn lvl
+  "selector: extract level from molec"
+  [x]
+  (if (seq? x)
+    (car x)))
+
+(defn xpr
+  "selector: extract prolog expression"
+  [x]
+  (if (seq? x)
+    (cadr x)))
+
+(defn molec
+  "constructor: a `molec` is a tuple of (level,prolog_exp), where level
+  is used to discriminate variables at different levels in the proof tree."
+  [x y]
+  (list x y))
+
 ; Clojure doesn't properly implement the semantics of cons-cells
 ; so just use a list. The knock-on effect is that bind must
 ; call cadr rather than cdr
