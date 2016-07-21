@@ -25,3 +25,16 @@
     [clojure.test :refer :all]
     [twspi.selectors :refer :all]))
 
+(def env
+  (->>
+    []
+    (bind '?x 3)
+    (bind '?y 4)
+    (bind '?z '?y)))
+
+(deftest check-bind
+  (is (= '((?z ?y) (?y 4) (?x 3)) env)))
+
+(deftest check-bond
+  (is (= 3 (bond '?x env)))
+  (is (nil? (bond '?a env))))

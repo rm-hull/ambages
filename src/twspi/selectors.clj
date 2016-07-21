@@ -30,6 +30,9 @@
 (def lvl car)
 (def xpr cadr)
 (defn molec [x y] (list x y))
+; Clojure doesn't properly implement the semantics of cons-cells
+; so just use a list. The knock-on effect is that bind must
+; call cadr rather than cdr
 (defn bind [x y e] (cons (list x y) e))
-(defn bond [x e] (cdr (or (assoc x e) '(nil))))
+(defn bond [x e] (cadr (or (assoc x e) '(nil))))
 (defn but-first-goal [x] (cons (cdar x) (cdr x)))
