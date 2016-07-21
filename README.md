@@ -73,6 +73,7 @@ See [www.destructuring-bind.org/twspi](http://www.destructuring-bind.org/twspi/)
 * http://dl.acm.org/citation.cfm?id=537885#
 * http://wiki.call-cc.org/eggref/4/tiny-prolog
 * http://www.lurklurk.org/clj_repl/clj_repl.html
+* http://strlen.com/bla/prolog.bla
 
 ## License
 
