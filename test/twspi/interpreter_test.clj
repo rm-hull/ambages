@@ -24,7 +24,7 @@
   (:refer-clojure :exclude [var?])
   (:require
     [clojure.test :refer :all]
-    [twspi.selectors :refer [bind xpr]]
+    [twspi.selectors :refer [bind xpr molec]]
     [twspi.interpreter :refer :all]))
 
 (deftest check-var?
