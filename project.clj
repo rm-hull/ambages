@@ -1,5 +1,5 @@
 
-(defproject rm-hull/twspi "0.1.0"
+(defproject rm-hull/twspi "0.1.0-alpha"
   :description "A small prolog interpreter implemented in Clojure"
   :url "https://github.com/rm-hull/twspi"
   :license {
