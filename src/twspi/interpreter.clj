@@ -29,3 +29,12 @@
 (defn var? [x]
   (member? x '(?a ?b ?c ?x ?y ?z ?u ?v ?w)))
 
+(defn lookup
+  "retrieves values through levels of variable bindings"
+  [p env]
+  (or
+    (and
+      p
+      (var? (xpr p))
+      (lookup (bond p env) env))
+    p))

@@ -21,13 +21,34 @@
 ;; SOFTWARE.
 
 (ns twspi.interpreter-test
+  (:refer-clojure :exclude [var?])
   (:require
     [clojure.test :refer :all]
+    [twspi.selectors :refer [bind xpr]]
     [twspi.interpreter :refer :all]))
-
 
 (deftest check-var?
   (is (true? (var? '?u)))
   (is (false? (var? '?g)))
   (is (false? (var? nil)))
-  (is (false? (var? '(?a)))))
+  (is (false? (var? '(?a))))
+  (is (true? (var? (xpr (molec 3 '?a))))))
+
+(deftest check-lookup
+  (let [p (molec 3 '?a)
+        x (molec 0 '?x)
+        y (molec 0 '?y)
+        z (molec 1 '?z)
+        env (->>
+              []
+              (bind x 3)
+              (bind y 4)
+              (bind z y))]
+    (is (nil? (lookup nil env)))
+    (is (nil? (lookup nil nil)))
+    (is (= p (lookup p nil)))
+    (is (= p (lookup p env)))
+    (is (= 3 (lookup x env)))
+    (is (= 4 (lookup y env)))))
+
+
