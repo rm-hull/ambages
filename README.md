@@ -74,6 +74,7 @@ See [www.destructuring-bind.org/twspi](http://www.destructuring-bind.org/twspi/)
 * http://wiki.call-cc.org/eggref/4/tiny-prolog
 * http://www.lurklurk.org/clj_repl/clj_repl.html
 * http://strlen.com/bla/prolog.bla
+* http://cs.stackexchange.com/questions/6618/how-to-implement-a-prolog-interpreter-in-a-purely-functional-language
 
 ## License
 
