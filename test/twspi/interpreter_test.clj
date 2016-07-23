@@ -51,4 +51,14 @@
     (is (= 3 (lookup x env)))
     (is (= 4 (lookup y env)))))
 
+(deftest check-unify
+  (is (= '(((17 ?x) (4711 b))   ; TODO Are these the right way round?
+           ((4711 ?y) (17 a))   ; Order shouldn't matter, actually
+           ((3 ?z) (2 c))
+           (bottom-of-env))
+         (unify
+          '(17 (a ?x))
+          '(4711 (?y b))
+          '(((3 ?z) (2 c)) (bottom-of-env))))))
+
 

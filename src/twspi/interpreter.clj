@@ -38,3 +38,42 @@
       (var? (xpr p))
       (lookup (bond p env) env))
     p))
+
+(defn unify
+  "Unify is called with three arguments:
+
+    (unify (level-x x) (level-y y) env)
+
+  If x and y don't match, unify returns nil. Otherwise, it returns a
+  new environment, which is the old one with possible new bindings
+  pushed on top.
+
+  The unification algorithm is a version of the algorithm described
+  in detail in \"LOGLISP: Motivation, Design and Implementation\"
+  by J.A.Robinson and E.E.Sibert (1984)."
+  [x y env]
+  (let [x (lookup x env)
+        y (lookup y env)]
+
+    (cond
+      (= x y)
+      env
+
+      (var? (xpr x))
+      (bind x y env)
+
+      (var? (xpr y))
+      (bind y x env)
+
+      (or (atom? (xpr x)) (atom? (xpr y)))
+      (and (= (xpr x) (xpr y)) env)
+
+      :else
+      (let [env (unify
+                  (molec (lvl x) (car (xpr x)))
+                  (molec (lvl y) (car (xpr y)))
+                  env)]
+        (unify
+          (molec (lvl x) (cdr (xpr x)))
+          (molec (lvl y) (cdr (xpr y)))
+          env)))))
