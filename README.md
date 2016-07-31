@@ -27,7 +27,9 @@ functionality in Clojure.
 >
 > The interpreter is written in MACLISP dialect (Moon, 1974). Only the most basic
 > functions are used, with the exceptions of LET and LOOP. LET is a convenient
-> way of writing LAMBDAs
+> way of writing LAMBDAs...
+
+The full text of the article can be found in the [included PDF](https://github.com/rm-hull/twspi/blob/master/doc/twspi.pdf).
 
 ### Pre-requisites
 
