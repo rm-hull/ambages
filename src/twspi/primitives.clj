@@ -42,13 +42,13 @@
   (cond
     (empty? xs) false
     (= x (car xs)) true
-    :else (recur x (next xs))))
+    :else (recur x (cdr xs))))
 
 (defn assoc [x xs]
   (cond
     (empty? xs) nil
     (= x (caar xs)) (car xs)
-    :else (recur x (next xs))))
+    :else (recur x (cdr xs))))
 
 (defmacro setq [symb body]
   `(def ~symb ~body))
