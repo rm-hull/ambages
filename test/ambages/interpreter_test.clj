@@ -20,29 +20,46 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns twspi.selectors-test
+(ns ambages.interpreter-test
+  (:refer-clojure :exclude [var?])
   (:require
     [clojure.test :refer :all]
-    [twspi.selectors :refer :all]))
+    [ambages.selectors :refer [bind xpr molec]]
+    [ambages.interpreter :refer :all]))
 
-(deftest check-lvl
-  (is (nil? (lvl 3)))
-  (is (= 0 (lvl (molec 0 '?x)))))
+(deftest check-var?
+  (is (true? (var? '?u)))
+  (is (false? (var? '?g)))
+  (is (false? (var? nil)))
+  (is (false? (var? '(?a))))
+  (is (true? (var? (xpr (molec 3 '?a))))))
 
-(deftest check-xpr
-  (is (nil? (xpr 3)))
-  (is (= '?x (xpr (molec 0 '?x)))))
+(deftest check-lookup
+  (let [p (molec 3 '?a)
+        x (molec 0 '?x)
+        y (molec 0 '?y)
+        z (molec 1 '?z)
+        env (->>
+              []
+              (bind x 3)
+              (bind y 4)
+              (bind z y))]
+    (is (nil? (lookup nil env)))
+    (is (nil? (lookup nil nil)))
+    (is (= p (lookup p nil)))
+    (is (= p (lookup p env)))
+    (is (= 3 (lookup x env)))
+    (is (= 4 (lookup y env)))))
 
-(def env
-  (->>
-    []
-    (bind '?x 3)
-    (bind '?y 4)
-    (bind '?z '?y)))
+(deftest check-unify
+  (is (= '(((17 ?x) (4711 b))   ; TODO Are these the right way round?
+           ((4711 ?y) (17 a))   ; Order shouldn't matter, actually
+           ((3 ?z) (2 c))
+           (bottom-of-env))
+         (unify
+          '(17 (a ?x))
+          '(4711 (?y b))
+          '(((3 ?z) (2 c))
+            (bottom-of-env))))))
 
-(deftest check-bind
-  (is (= '((?z ?y) (?y 4) (?x 3)) env)))
 
-(deftest check-bond
-  (is (= 3 (bond '?x env)))
-  (is (nil? (bond '?a env))))

@@ -20,35 +20,29 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns twspi.primitives
-  "A Clojure-MACLISP compatibility layer, of sorts"
-  (:refer-clojure :exclude [assoc var?]))
+(ns ambages.selectors-test
+  (:require
+    [clojure.test :refer :all]
+    [ambages.selectors :refer :all]))
 
-(def car first)
-(def caar ffirst)
-(def cadr second)
-(def cdr next)
-(def cdar (comp cdr car))
-(defn cdar [x] (cdr (car x)))
+(deftest check-lvl
+  (is (nil? (lvl 3)))
+  (is (= 0 (lvl (molec 0 '?x)))))
 
-(defn atom? [x]
-  (cond
-    (nil? x) false
-    (seq? x) false
-    (list? x) false
-    :else true))
+(deftest check-xpr
+  (is (nil? (xpr 3)))
+  (is (= '?x (xpr (molec 0 '?x)))))
 
-(defn member? [x xs]
-  (cond
-    (empty? xs) false
-    (= x (car xs)) true
-    :else (recur x (cdr xs))))
+(def env
+  (->>
+    []
+    (bind '?x 3)
+    (bind '?y 4)
+    (bind '?z '?y)))
 
-(defn assoc [x xs]
-  (cond
-    (empty? xs) nil
-    (= x (caar xs)) (car xs)
-    :else (recur x (cdr xs))))
+(deftest check-bind
+  (is (= '((?z ?y) (?y 4) (?x 3)) env)))
 
-(defmacro setq [symb body]
-  `(def ~symb ~body))
+(deftest check-bond
+  (is (= 3 (bond '?x env)))
+  (is (nil? (bond '?a env))))

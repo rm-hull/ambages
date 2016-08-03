@@ -20,46 +20,34 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns twspi.interpreter-test
-  (:refer-clojure :exclude [var?])
+(ns ambages.selectors
+  "Selectors and constructor functions (which are only there for readability)
+  built from CARs, CDRs and CONSes."
+  (:refer-clojure :exclude [assoc])
   (:require
-    [clojure.test :refer :all]
-    [twspi.selectors :refer [bind xpr molec]]
-    [twspi.interpreter :refer :all]))
+    [ambages.primitives :refer :all]))
 
-(deftest check-var?
-  (is (true? (var? '?u)))
-  (is (false? (var? '?g)))
-  (is (false? (var? nil)))
-  (is (false? (var? '(?a))))
-  (is (true? (var? (xpr (molec 3 '?a))))))
+(defn lvl
+  "selector: extract level from molec"
+  [x]
+  (if (seq? x)
+    (car x)))
 
-(deftest check-lookup
-  (let [p (molec 3 '?a)
-        x (molec 0 '?x)
-        y (molec 0 '?y)
-        z (molec 1 '?z)
-        env (->>
-              []
-              (bind x 3)
-              (bind y 4)
-              (bind z y))]
-    (is (nil? (lookup nil env)))
-    (is (nil? (lookup nil nil)))
-    (is (= p (lookup p nil)))
-    (is (= p (lookup p env)))
-    (is (= 3 (lookup x env)))
-    (is (= 4 (lookup y env)))))
+(defn xpr
+  "selector: extract prolog expression"
+  [x]
+  (if (seq? x)
+    (cadr x)))
 
-(deftest check-unify
-  (is (= '(((17 ?x) (4711 b))   ; TODO Are these the right way round?
-           ((4711 ?y) (17 a))   ; Order shouldn't matter, actually
-           ((3 ?z) (2 c))
-           (bottom-of-env))
-         (unify
-          '(17 (a ?x))
-          '(4711 (?y b))
-          '(((3 ?z) (2 c))
-            (bottom-of-env))))))
+(defn molec
+  "constructor: a `molec` is a tuple of (level,prolog_exp), where level
+  is used to discriminate variables at different levels in the proof tree."
+  [x y]
+  (list x y))
 
-
+; Clojure doesn't properly implement the semantics of cons-cells
+; so just use a list. The knock-on effect is that bond must
+; call cadr rather than cdr
+(defn bind [x y e] (cons (list x y) e))
+(defn bond [x e] (cadr (or (assoc x e) '(nil))))
+(defn but-first-goal [x] (cons (cdar x) (cdr x)))

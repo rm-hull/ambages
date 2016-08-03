@@ -20,11 +20,11 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns twspi.interpreter
+(ns ambages.interpreter
   (:refer-clojure :exclude [assoc var?])
   (:require
-    [twspi.primitives :refer :all]
-    [twspi.selectors :refer :all]))
+    [ambages.primitives :refer :all]
+    [ambages.selectors :refer :all]))
 
 (defn var? [x]
   (member? x '(?a ?b ?c ?x ?y ?z ?u ?v ?w)))

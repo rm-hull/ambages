@@ -20,34 +20,37 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns twspi.selectors
-  "Selectors and constructor functions (which are only there for readability)
-  built from CARs, CDRs and CONSes."
+(ns ambages.primitives-test
   (:refer-clojure :exclude [assoc])
   (:require
-    [twspi.primitives :refer :all]))
+    [clojure.test :refer :all]
+    [ambages.primitives :refer :all]))
 
-(defn lvl
-  "selector: extract level from molec"
-  [x]
-  (if (seq? x)
-    (car x)))
+(def test-data (list 1 2 3 4 5))
 
-(defn xpr
-  "selector: extract prolog expression"
-  [x]
-  (if (seq? x)
-    (cadr x)))
+(deftest check-primitives
+  (is (nil? (car nil)))
+  (is (nil? (cadr nil)))
+  (is (nil? (cdar nil)))
+  (is (nil? (next nil)))
+  (is (= 1 (car test-data)))
+  (is (= 2 (cadr test-data)))
+  (is (= (list 2) (cdar (list [1 2]))))
+  (is (= (list 2 3 4 5) (cdr test-data))))
 
-(defn molec
-  "constructor: a `molec` is a tuple of (level,prolog_exp), where level
-  is used to discriminate variables at different levels in the proof tree."
-  [x y]
-  (list x y))
+(deftest check-member?
+  (is (true? (member? 3 test-data)))
+  (is (false? (member? 11 test-data)))
+  (is (false? (member? 4 nil))))
 
-; Clojure doesn't properly implement the semantics of cons-cells
-; so just use a list. The knock-on effect is that bond must
-; call cadr rather than cdr
-(defn bind [x y e] (cons (list x y) e))
-(defn bond [x e] (cadr (or (assoc x e) '(nil))))
-(defn but-first-goal [x] (cons (cdar x) (cdr x)))
+(deftest check-assoc
+  (let [lst [[:a 1] [:b 2] [:c 3] [:c 11]]]
+    (is (= [:b 2] (assoc :b lst)))
+    (is (= [:c 3] (assoc :c lst)))
+    (is (nil? (assoc :d lst)))))
+
+(deftest check-setq
+  (let [x 5]
+    (setq x 19)
+    (is (= 5 x)))
+  (is (= 19 x)))

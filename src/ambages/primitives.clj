@@ -20,37 +20,35 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns twspi.primitives-test
-  (:refer-clojure :exclude [assoc])
-  (:require
-    [clojure.test :refer :all]
-    [twspi.primitives :refer :all]))
+(ns ambages.primitives
+  "A Clojure-MACLISP compatibility layer, of sorts"
+  (:refer-clojure :exclude [assoc var?]))
 
-(def test-data (list 1 2 3 4 5))
+(def car first)
+(def caar ffirst)
+(def cadr second)
+(def cdr next)
+(def cdar (comp cdr car))
+(defn cdar [x] (cdr (car x)))
 
-(deftest check-primitives
-  (is (nil? (car nil)))
-  (is (nil? (cadr nil)))
-  (is (nil? (cdar nil)))
-  (is (nil? (next nil)))
-  (is (= 1 (car test-data)))
-  (is (= 2 (cadr test-data)))
-  (is (= (list 2) (cdar (list [1 2]))))
-  (is (= (list 2 3 4 5) (cdr test-data))))
+(defn atom? [x]
+  (cond
+    (nil? x) false
+    (seq? x) false
+    (list? x) false
+    :else true))
 
-(deftest check-member?
-  (is (true? (member? 3 test-data)))
-  (is (false? (member? 11 test-data)))
-  (is (false? (member? 4 nil))))
+(defn member? [x xs]
+  (cond
+    (empty? xs) false
+    (= x (car xs)) true
+    :else (recur x (cdr xs))))
 
-(deftest check-assoc
-  (let [lst [[:a 1] [:b 2] [:c 3] [:c 11]]]
-    (is (= [:b 2] (assoc :b lst)))
-    (is (= [:c 3] (assoc :c lst)))
-    (is (nil? (assoc :d lst)))))
+(defn assoc [x xs]
+  (cond
+    (empty? xs) nil
+    (= x (caar xs)) (car xs)
+    :else (recur x (cdr xs))))
 
-(deftest check-setq
-  (let [x 5]
-    (setq x 19)
-    (is (= 5 x)))
-  (is (= 19 x)))
+(defmacro setq [symb body]
+  `(def ~symb ~body))

@@ -1,5 +1,9 @@
-# TWSPI
-[![Build Status](https://travis-ci.org/rm-hull/twspi.svg?branch=master)](http://travis-ci.org/rm-hull/twspi) [![Coverage Status](https://coveralls.io/repos/rm-hull/twspi/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/twspi?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/twspi/status.svg)](https://jarkeeper.com/rm-hull/twspi) [![Downloads](https://jarkeeper.com/rm-hull/twspi/downloads.svg)](https://jarkeeper.com/rm-hull/twspi) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/twspi.svg)](https://clojars.org/rm-hull/twspi)
+# Ambages [am-BEY-jeez] noun, Archaic. _pl (plural only)_
+
+> 1. Indirect or roundabount way of talking; circumlocution.
+> 2. Indirect or roundabout routes or directions.
+
+[![Build Status](https://travis-ci.org/rm-hull/ambages.svg?branch=master)](http://travis-ci.org/rm-hull/ambages) [![Coverage Status](https://coveralls.io/repos/rm-hull/ambages/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/ambages?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/ambages/status.svg)](https://jarkeeper.com/rm-hull/ambages) [![Downloads](https://jarkeeper.com/rm-hull/ambages/downloads.svg)](https://jarkeeper.com/rm-hull/ambages) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/ambages.svg)](https://clojars.org/rm-hull/ambages)
 
 A small prolog interpreter, based on a paper by **M. Nilsson**, _Uppsala University_,
 where the aim is to faithfully reproduce (at least initially) the same demonstrable
@@ -29,7 +33,7 @@ functionality in Clojure.
 > functions are used, with the exceptions of LET and LOOP. LET is a convenient
 > way of writing LAMBDAs...
 
-The full text of the article can be found in the [included PDF](https://github.com/rm-hull/twspi/blob/master/doc/twspi.pdf).
+The full text of the article can be found in the [included PDF](https://github.com/rm-hull/ambages/blob/master/doc/twspi.pdf).
 
 ### Pre-requisites
 
@@ -39,17 +43,17 @@ You will need [Leiningen](https://github.com/technomancy/leiningen) 2.6.1 or abo
 
 To build and install the library locally, run:
 
-    $ cd clustering
+    $ cd ambages
     $ lein test
     $ lein install
 
 ### Including in your project
 
-There _will be_ a version hosted at [Clojars](https://clojars.org/rm-hull/twspi).
+There _will be_ a version hosted at [Clojars](https://clojars.org/rm-hull/ambages).
 For leiningen include a dependency:
 
 ```clojure
-[rm-hull/twspi "0.1.0"]
+[rm-hull/ambages "0.1.0"]
 ```
 
 For maven-based projects, add the following to your `pom.xml`:
@@ -57,14 +61,14 @@ For maven-based projects, add the following to your `pom.xml`:
 ```xml
 <dependency>
   <groupId>rm-hull</groupId>
-  <artifactId>twspi</artifactId>
+  <artifactId>ambages</artifactId>
   <version>0.1.0</version>
 </dependency>
 ```
 
 ## API Documentation
 
-See [www.destructuring-bind.org/twspi](http://www.destructuring-bind.org/twspi/) for API details.
+See [www.destructuring-bind.org/ambages](http://www.destructuring-bind.org/ambages/) for API details.
 
 ## Basic Usage
 
