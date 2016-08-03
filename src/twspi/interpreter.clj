@@ -59,6 +59,9 @@
       (= x y)
       env
 
+      (and (nil? (xpr x)) (nil? (xpr y)))
+      env
+
       (var? (xpr x))
       (bind x y env)
 
@@ -66,14 +69,14 @@
       (bind y x env)
 
       (or (atom? (xpr x)) (atom? (xpr y)))
-      (and (= (xpr x) (xpr y)) env)
+      (if (= (xpr x) (xpr y)) env)
 
       :else
-      (let [env (unify
-                  (molec (lvl x) (car (xpr x)))
-                  (molec (lvl y) (car (xpr y)))
-                  env)]
+      (let [env2 (unify
+                   (molec (lvl x) (car (xpr x)))
+                   (molec (lvl y) (car (xpr y)))
+                   env)]
         (unify
           (molec (lvl x) (cdr (xpr x)))
           (molec (lvl y) (cdr (xpr y)))
-          env)))))
+          env2)))))
