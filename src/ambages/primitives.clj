@@ -36,6 +36,7 @@
     (nil? x) false
     (seq? x) false
     (list? x) false
+    (vector? x) false
     :else true))
 
 (defn member? [x xs]

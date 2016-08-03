@@ -54,3 +54,11 @@
     (setq x 19)
     (is (= 5 x)))
   (is (= 19 x)))
+
+(deftest check-atom?
+  (is (true? (atom? 3)))
+  (is (true? (atom? :fred)))
+  (is (true? (atom? 'fred)))
+  (is (false? (atom? nil)))
+  (is (false? (atom? [1 2 3])))
+  (is (false? (atom? (cons 1 (cons 2 nil))))))
