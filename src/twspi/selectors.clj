@@ -46,7 +46,7 @@
   (list x y))
 
 ; Clojure doesn't properly implement the semantics of cons-cells
-; so just use a list. The knock-on effect is that bind must
+; so just use a list. The knock-on effect is that bond must
 ; call cadr rather than cdr
 (defn bind [x y e] (cons (list x y) e))
 (defn bond [x e] (cadr (or (assoc x e) '(nil))))
