@@ -59,6 +59,7 @@
          (unify
           '(17 (a ?x))
           '(4711 (?y b))
-          '(((3 ?z) (2 c)) (bottom-of-env))))))
+          '(((3 ?z) (2 c))
+            (bottom-of-env))))))
 
 
