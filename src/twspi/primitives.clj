@@ -31,7 +31,12 @@
 (def cdar (comp cdr car))
 (defn cdar [x] (cdr (car x)))
 
-(def atom? (complement seq?))
+(defn atom? [x]
+  (cond
+    (nil? x) false
+    (seq? x) false
+    (list? x) false
+    :else true))
 
 (defn member? [x xs]
   (cond
