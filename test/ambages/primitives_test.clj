@@ -61,4 +61,5 @@
   (is (true? (atom? 'fred)))
   (is (false? (atom? nil)))
   (is (false? (atom? [1 2 3])))
+  (is (false? (atom? (list 1 2 3))))
   (is (false? (atom? (cons 1 (cons 2 nil))))))
