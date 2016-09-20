@@ -51,3 +51,4 @@
 (defn bind [x y e] (cons (list x y) e))
 (defn bond [x e] (cadr (or (assoc x e) '(nil))))
 (defn but-first-goal [x] (cons (cdar x) (cdr x)))
+;(defn but-first-goal [x] (cdr x))

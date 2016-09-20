@@ -28,7 +28,6 @@
 (def caar ffirst)
 (def cadr second)
 (def cdr next)
-(def cdar (comp cdr car))
 (defn cdar [x] (cdr (car x)))
 
 (defn atom? [x]

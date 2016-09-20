@@ -52,6 +52,7 @@
   in detail in \"LOGLISP: Motivation, Design and Implementation\"
   by J.A.Robinson and E.E.Sibert (1984)."
   [x y env]
+  (println "unify X=" x "  Y=" y "  ENV=" env)
   (let [x (lookup x env)
         y (lookup y env)]
 
@@ -80,3 +81,80 @@
           (molec (lvl x) (cdr (xpr x)))
           (molec (lvl y) (cdr (xpr y)))
           env2)))))
+
+
+(declare ^:dynamic *top-level*)
+(declare ^:dynamic *database*)
+
+(defn seek
+  "Seek tries to prove a [[goal]]. nlist and n control level
+  information. The return value is either `nil` for failure,
+  or an integer level, whicht may be used by a cut predicate.
+
+  Together with `unify`, this is the interpreter core."
+  [to-prove nlist env n]
+  (println \newline)
+  (println "seek")
+  (println "  to-prove" to-prove)
+  (println "  nlist   " nlist)
+  (println "  env     " env)
+  (println "  n       " n)
+  (cond
+    (empty? to-prove)
+    (*top-level* env)
+
+    (empty? (car to-prove))
+    (seek (cdr to-prove) (cdr nlist) env n)
+
+    ;(and (atom? (car to-prove)) (not (var? (car to-prove))))
+    ;(apply (car to-prove) (list (cdr to-prove) nlist env n))
+
+    :else
+    (let [goalmolec (molec (car nlist) (car to-prove))
+          rst       (but-first-goal to-prove)
+          backtrk   (fn [[head & tail]]
+                      (println "> bktrk: H=" head " T=" tail)
+                      (println "> unify: X=" goalmolec " Y=" (molec n head) " ENV=" env)
+                      (if-let [env2 (unify goalmolec (molec n head) env)]
+                        (do
+                          (println "ENV2=" env2)
+                          (let [n (seek (cons tail rst) (cons n nlist) env2 (inc n))]
+                            (println "< bktrk: n=" n)
+                            n))
+                        (println "< bktrk: n= nil")))]
+      (->>
+        *database*
+        (map backtrk)
+        (remove nil?)
+        (drop-while (partial = n))
+        first))))
+
+(def ^:dynamic *top-level*
+  (fn [env]
+    (println "\n\n************* Environment **************\n" env
+               "\n****************************************")
+    0))
+
+(def ^:dynamic *database*
+  '(;((true))
+    ;((= ?x ?x))
+    ((father richard henry))
+    ((father michael richard))
+    ((grandfather ?x ?y) (father ?x ?z) (father ?z ?y))
+    ;((call ?x) ?x)
+
+    ))
+
+(defmacro prove [goals]
+  `(seek (list '~goals) '(0) '((bottom-of-env)) 1))
+
+(macroexpand-1 '(prove (grandfather ?x ?y)))
+
+(prove (grandfather ?x ?y))
+(prove (father michael ?y))
+
+(prove (grandfather ?x ?y))
+(prove (father ?x ?y))
+(prove (father richard henry))
+
+
