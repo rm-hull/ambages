@@ -3,7 +3,12 @@
 > 1. Indirect or roundabount way of talking; circumlocution.
 > 2. Indirect or roundabout routes or directions.
 
-[![Build Status](https://travis-ci.org/rm-hull/ambages.svg?branch=master)](http://travis-ci.org/rm-hull/ambages) [![Coverage Status](https://coveralls.io/repos/rm-hull/ambages/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/ambages?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/ambages/status.svg)](https://jarkeeper.com/rm-hull/ambages) [![Downloads](https://jarkeeper.com/rm-hull/ambages/downloads.svg)](https://jarkeeper.com/rm-hull/ambages) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/ambages.svg)](https://clojars.org/rm-hull/ambages)
+[![Build Status](https://travis-ci.org/rm-hull/ambages.svg?branch=master)](http://travis-ci.org/rm-hull/ambages) 
+[![Coverage Status](https://coveralls.io/repos/rm-hull/ambages/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/ambages?branch=master) 
+[![Dependencies Status](https://versions.deps.co/rm-hull/ambages/status.svg)](https://versions.deps.co/rm-hull/ambages) 
+[![Downloads](https://versions.deps.co/rm-hull/ambages/downloads.svg)](https://versions.deps.co/rm-hull/ambages) 
+[![Clojars Project](https://img.shields.io/clojars/v/rm-hull/ambages.svg)](https://clojars.org/rm-hull/ambages)
+[![Maintenance](https://img.shields.io/maintenance/yes/2018.svg?maxAge=2592000)]()
 
 A small prolog interpreter, based on a paper by **M. Nilsson**, _Uppsala University_,
 where the aim is to faithfully reproduce (at least initially) the same demonstrable
